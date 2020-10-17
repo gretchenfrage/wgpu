@@ -1007,6 +1007,8 @@ impl<G: GlobalIdentityHandlerFactory> Global<G> {
     ) -> Result<id::BufferId, resource::CreateBufferError> {
         span!(_guard, INFO, "Device::create_buffer");
 
+        assert!(desc.size > 0, "Buffer size cannot be 0");
+
         let hub = B::hub(self);
         let mut token = Token::root();
 
@@ -1314,6 +1316,10 @@ impl<G: GlobalIdentityHandlerFactory> Global<G> {
         id_in: Input<G, id::TextureId>,
     ) -> Result<id::TextureId, resource::CreateTextureError> {
         span!(_guard, INFO, "Device::create_texture");
+
+        assert!(desc.size.height > 0, "Texture height cannot be 0");
+        assert!(desc.size.width > 0, "Texture width cannot be 0");
+        assert!(desc.size.depth > 0, "Texture depth cannot be 0");
 
         let hub = B::hub(self);
         let mut token = Token::root();
